@@ -7,9 +7,6 @@ import com.example.demo.Model.Author;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
 public class AuthorUtil {
 
@@ -22,7 +19,7 @@ public class AuthorUtil {
     }
 
 
-    public Author createAuthorCommandToAuthor(CreateAuthorCommand createAuthorCommand){
+    public Author createAuthorCommandToAuthor(CreateAuthorCommand createAuthorCommand) {
         Author author = new Author();
         author.setAddress(createAuthorCommand.getAddress());
         author.setName(createAuthorCommand.getName());
@@ -37,7 +34,7 @@ public class AuthorUtil {
         return title;
     }
 
-    public Author rewrite(Author author, UpdateAuthorCommand updateAuthorCommand){
+    public Author rewrite(Author author, UpdateAuthorCommand updateAuthorCommand) {
         author.setAddress(updateAuthorCommand.getAddress());
         author.setName(updateAuthorCommand.getName());
         return author;
