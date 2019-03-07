@@ -2,14 +2,13 @@ package com.example.demo.Controller;
 
 import com.example.demo.Command.CreateAuthorCommand;
 import com.example.demo.Command.UpdateAuthorCommand;
-import com.example.demo.Model.Author;
 import com.example.demo.Service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/author")
@@ -20,31 +19,37 @@ public class AuthorController {
 
     @Autowired
     public AuthorController(AuthorService authorService) {
-        Assert.notNull(authorService,"AuthorService can not be a null");
+        Assert.notNull(authorService, "AuthorService can not be a null");
         this.authorService = authorService;
     }
 
     @PutMapping("/add")
-    public @ResponseBody void addAuthor(CreateAuthorCommand createAuthorCommand){
+    public ResponseEntity addAuthor(@RequestBody CreateAuthorCommand createAuthorCommand) {
         authorService.addAuthor(createAuthorCommand);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/getList")
-    public @ResponseBody List<Author> getAllAuthors(){
-        return authorService.getAllAuthors();
+    public ResponseEntity getAllAuthors() {
+        authorService.getAllAuthors();
+        return new ResponseEntity(HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
-    public @ResponseBody Author getAuthorById(@PathVariable(value="id")Long id){
-        return authorService.getAuthorById(id);
+    public ResponseEntity getAuthorById(@PathVariable(value = "id") Long id) {
+        authorService.getAuthorById(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public @ResponseBody void updateAuthor(UpdateAuthorCommand updateAuthorCommand){
+    public ResponseEntity updateAuthor(@RequestBody UpdateAuthorCommand updateAuthorCommand) {
         authorService.updateAuthor(updateAuthorCommand);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
-    public @ResponseBody void deleteAuthor(@PathVariable(value="id")Long id){
+    public ResponseEntity deleteAuthor(@PathVariable(value = "id") Long id) {
         authorService.deleteAuthor(id);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

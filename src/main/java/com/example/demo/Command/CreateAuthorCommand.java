@@ -1,10 +1,16 @@
 package com.example.demo.Command;
 
+import com.example.demo.Model.Book;
+
+import java.util.Set;
+
 public class CreateAuthorCommand {
 
     private String name;
 
     private String address;
+
+    private Set<Book> bookList;
 
     public CreateAuthorCommand() {
     }
@@ -28,5 +34,13 @@ public class CreateAuthorCommand {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Set<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(Set<Book> bookList) {
+        this.bookList = bookList;
     }
 }

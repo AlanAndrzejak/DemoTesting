@@ -5,11 +5,13 @@ import com.example.demo.Model.Book;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 public class BookDaoImpl implements BookDao {
 
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override
@@ -24,6 +26,11 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book getBookById(Long id) {
+        return null;
+    }
+
+    @Override
+    public Book getBookByTitle(String title) {
         return null;
     }
 

@@ -4,8 +4,11 @@ import com.example.demo.Command.CreateAuthorCommand;
 import com.example.demo.Command.UpdateAuthorCommand;
 import com.example.demo.Dao.AuthorDao;
 import com.example.demo.Model.Author;
+import com.example.demo.Model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 @Component
 public class AuthorUtil {
@@ -13,9 +16,13 @@ public class AuthorUtil {
     private final
     AuthorDao authorDao;
 
+    private final
+    BookUtil bookUtil;
+
     @Autowired
-    public AuthorUtil(AuthorDao authorDao) {
+    public AuthorUtil(AuthorDao authorDao, BookUtil bookUtil) {
         this.authorDao = authorDao;
+        this.bookUtil = bookUtil;
     }
 
 
@@ -23,6 +30,8 @@ public class AuthorUtil {
         Author author = new Author();
         author.setAddress(createAuthorCommand.getAddress());
         author.setName(createAuthorCommand.getName());
+        this.removeExistBook(createAuthorCommand);
+        author.setBooks(createAuthorCommand.getBookList());
         return author;
     }
 
@@ -38,6 +47,11 @@ public class AuthorUtil {
         author.setAddress(updateAuthorCommand.getAddress());
         author.setName(updateAuthorCommand.getName());
         return author;
+    }
+
+    private void removeExistBook(CreateAuthorCommand createAuthorCommand) {
+        Set<Book> books = createAuthorCommand.getBookList();
+        books.removeIf(book -> bookUtil.bookTitleToBook(book.getTitle()) != null);
     }
 
 }

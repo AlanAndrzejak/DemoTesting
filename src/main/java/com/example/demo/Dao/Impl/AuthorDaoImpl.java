@@ -5,17 +5,18 @@ import com.example.demo.Model.Author;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 public class AuthorDaoImpl implements AuthorDao {
 
+    @PersistenceContext
     private EntityManager entityManager;
-
 
     @Override
     public void addAuthor(Author author) {
-        return;
+        entityManager.persist(author);
     }
 
     @Override

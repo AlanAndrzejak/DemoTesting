@@ -24,8 +24,8 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     public BookServiceImpl(BookDao bookDaoImpl, BookUtil bookUtil) {
-        Assert.notNull(bookDaoImpl,"BookDao can not be a null");
-        Assert.notNull(bookUtil,"BookUtil can not be a null");
+        Assert.notNull(bookDaoImpl, "BookDao can not be a null");
+        Assert.notNull(bookUtil, "BookUtil can not be a null");
         this.bookDaoImpl = bookDaoImpl;
         this.bookUtil = bookUtil;
     }
@@ -51,12 +51,18 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
+    public Book getBookByTitle(String title) {
+        return bookDaoImpl.getBookByTitle(title);
+    }
+
+    @Override
+    @Transactional
     public void updateBook(UpdateBookCommand updateBookCommand) {
         if (updateBookCommand.getId() == null) {
             throw new IllegalArgumentException("Book id can not be null");
         }
         Book book = bookDaoImpl.getBookById(updateBookCommand.getId());
-        bookUtil.rewrite(book,updateBookCommand);
+        bookUtil.rewrite(book, updateBookCommand);
         bookDaoImpl.updateBook(book);
     }
 

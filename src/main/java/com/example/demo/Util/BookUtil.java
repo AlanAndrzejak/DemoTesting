@@ -7,6 +7,8 @@ import com.example.demo.Model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.logging.Logger;
+
 @Component
 public class BookUtil {
 
@@ -32,11 +34,19 @@ public class BookUtil {
     }
 
     private Book bookIdToBook(Long BookId) {
-        Book Book = bookDao.getBookById(BookId);
-        if (Book == null) {
+        Book book = bookDao.getBookById(BookId);
+        if (book == null) {
             throw new RuntimeException("Can not map " + BookId + " to Book");
         }
-        return Book;
+        return book;
+    }
+
+    public Book bookTitleToBook(String title) {
+        Book book = bookDao.getBookByTitle(title);
+        if (book == null) {
+            Logger.getAnonymousLogger().info("Book with title " + title + " not found");
+        }
+        return book;
     }
 
 }
