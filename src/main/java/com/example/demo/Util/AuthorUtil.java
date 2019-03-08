@@ -8,7 +8,10 @@ import com.example.demo.Model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class AuthorUtil {
@@ -30,8 +33,7 @@ public class AuthorUtil {
         Author author = new Author();
         author.setAddress(createAuthorCommand.getAddress());
         author.setName(createAuthorCommand.getName());
-        this.removeExistBook(createAuthorCommand);
-        author.setBooks(createAuthorCommand.getBookList());
+        author.setBooks(createAuthorCommand.getBookSet());
         return author;
     }
 
@@ -50,8 +52,14 @@ public class AuthorUtil {
     }
 
     private void removeExistBook(CreateAuthorCommand createAuthorCommand) {
-        Set<Book> books = createAuthorCommand.getBookList();
+        Set<Book> books = createAuthorCommand.getBookSet();
         books.removeIf(book -> bookUtil.bookTitleToBook(book.getTitle()) != null);
+    }
+
+    public Set<Book> getExistBooksFromAuthor(Author author) {
+        Set<Book> books = new HashSet<>();
+        books = author.getBooks().stream().map(book -> bookUtil.bookTitleToBook(book.getTitle())).filter(Objects::nonNull).collect(Collectors.toSet());
+        return books;
     }
 
 }

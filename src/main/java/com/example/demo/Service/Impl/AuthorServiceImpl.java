@@ -4,14 +4,17 @@ import com.example.demo.Command.CreateAuthorCommand;
 import com.example.demo.Command.UpdateAuthorCommand;
 import com.example.demo.Dao.AuthorDao;
 import com.example.demo.Model.Author;
+import com.example.demo.Model.Book;
 import com.example.demo.Service.AuthorService;
 import com.example.demo.Util.AuthorUtil;
+import com.example.demo.Util.BookUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -21,6 +24,9 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final
     AuthorUtil authorUtil;
+
+    @Autowired
+    private BookUtil bookUtil;
 
     @Autowired
     public AuthorServiceImpl(AuthorDao authorDaoImpl, AuthorUtil authorUtil) {
@@ -34,6 +40,9 @@ public class AuthorServiceImpl implements AuthorService {
     @Transactional
     public void addAuthor(CreateAuthorCommand createAuthorCommand) {
         Author author = authorUtil.createAuthorCommandToAuthor(createAuthorCommand);
+        Set<Book> existBooksFromAuthor = authorUtil.getExistBooksFromAuthor(author);
+        author.getBooks().removeIf(book -> existBooksFromAuthor.stream().anyMatch(book1 -> book.getTitle().equals(book1.getTitle())));
+        author.getBooks().addAll(existBooksFromAuthor);
         authorDaoImpl.addAuthor(author);
     }
 

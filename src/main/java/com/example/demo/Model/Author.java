@@ -5,12 +5,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Authors")
+@Table(name = "authors")
 public class Author {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
+    private Long id;
 
     private String name;
 
@@ -20,7 +21,7 @@ public class Author {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
-    @JoinTable(name = "AuthorBooks",
+    @JoinTable(name = "authorbooks",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
@@ -34,6 +35,12 @@ public class Author {
         this.address = address;
     }
 
+    public Author(String name, String address, Set<Book> books) {
+        this.name = name;
+        this.address = address;
+        this.books = books;
+    }
+
     public Set<Book> getBooks() {
         return books;
     }
@@ -42,7 +49,11 @@ public class Author {
         this.books = books;
     }
 
-    public long getId() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
         return id;
     }
 

@@ -12,6 +12,8 @@ public interface AuthorDao {
 
     Author getAuthorById(Long id);
 
+    Author getAuthorByName(String name);
+
     void updateAuthor(Author author);
 
     void deleteAuthor(Author author);

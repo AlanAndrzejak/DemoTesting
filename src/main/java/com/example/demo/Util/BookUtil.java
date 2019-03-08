@@ -30,13 +30,14 @@ public class BookUtil {
         Book book = new Book();
         book.setCategory(createBookCommand.getCategory());
         book.setTitle(createBookCommand.getTitle());
+        book.setAuthors(createBookCommand.getAuthorSet());
         return book;
     }
 
-    private Book bookIdToBook(Long BookId) {
-        Book book = bookDao.getBookById(BookId);
+    private Book bookIdToBook(Long bookId) {
+        Book book = bookDao.getBookById(bookId);
         if (book == null) {
-            throw new RuntimeException("Can not map " + BookId + " to Book");
+            throw new RuntimeException("Can not map " + bookId + " to Book");
         }
         return book;
     }

@@ -70,6 +70,6 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public void deleteBook(Long id) {
         Book book = this.getBookById(id);
-        bookDaoImpl.updateBook(book);
+        bookDaoImpl.deleteBook(book);
     }
 }

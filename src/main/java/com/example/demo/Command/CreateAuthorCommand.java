@@ -10,7 +10,7 @@ public class CreateAuthorCommand {
 
     private String address;
 
-    private Set<Book> bookList;
+    private Set<Book> bookSet;
 
     public CreateAuthorCommand() {
     }
@@ -36,11 +36,11 @@ public class CreateAuthorCommand {
         this.address = address;
     }
 
-    public Set<Book> getBookList() {
-        return bookList;
+    public Set<Book> getBookSet() {
+        return bookSet;
     }
 
-    public void setBookList(Set<Book> bookList) {
-        this.bookList = bookList;
+    public void setBookList(Set<Book> bookSet) {
+        this.bookSet = bookSet;
     }
 }
